@@ -2,8 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import Fade from 'react-reveal/Fade';
 
-function Section(props) {
-    console.log(props)
+function Section(props) { 
     return (
         <Wrap bgImage={props.backgroundImg}>
             <Fade bottom>

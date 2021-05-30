@@ -1,41 +1,41 @@
-import React ,{useState}from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import MenuIcon from '@material-ui/icons/Menu';
 import CloseIcon from '@material-ui/icons/Close';
+import { selectCars } from '../features/car/carSlice'
+import { useSelector } from 'react-redux'
 
 function Header() {
 
-    const [menuStatus,SetMenuStatus]=useState(false)
-
-
+    const [menuStatus, SetMenuStatus] = useState(false)
+    const cars= useSelector(selectCars)
     return (
         <Container>
             <a>
                 <img src="/images/logo.svg" alt="Tesla" />
             </a>
             <Menu>
-                <p><a href="#">Model S</a></p>
-                <p><a href="#">Model 3</a></p>
-                <p><a href="#">Model X</a></p>
-                <p><a href="#">Model Y</a></p>
+              {cars && cars.map((car,index)=>(
+                     <a key={index} href="#">{car}</a> 
+              ))}  
             </Menu>
             <RightMenu>
                 <a href="#">Shop</a>
                 <a href="#">Tesla Account</a>
             </RightMenu>
-            <CustomMenu onClick={() =>SetMenuStatus(true) }/>
+            <CustomMenu onClick={() => SetMenuStatus(true)} />
             <BurgerNav show={menuStatus}>
                 <CloseWrapper>
-                    <CustomClose onClick={() =>SetMenuStatus(false) }/>
-                </CloseWrapper> 
+                    <CustomClose onClick={() => SetMenuStatus(false)} />
+                </CloseWrapper>
+                {cars && cars.map((car,index)=>(  
+                     <li key={index} ><a href="#">{car}</a></li>
+                ))} 
                 <li><a href="#">Existing Inventory</a></li>
                 <li><a href="#">Used Inventory</a></li>
                 <li><a href="#">Trade-in</a></li>
                 <li><a href="#">Cybertruck</a></li>
-                <li><a href="#">Roadaster</a></li>
-                <li><a href="#">Roadaster</a></li>
-                <li><a href="#">Roadaster</a></li>
-                <li><a href="#">Roadaster</a></li>
+                <li><a href="#">Roadaster</a></li> 
             </BurgerNav>
         </Container>
     )
@@ -100,7 +100,7 @@ const BurgerNav = styled.div`
     display:flex;
     flex-direction:column;
     text-align:start;
-    transform:${props=>props.show ? 'translateX(0)':'translateX(100%)'};
+    transform:${props => props.show ? 'translateX(0)' : 'translateX(100%)'};
     transition:transform 0.2s ease-in;
         li{
             padding:15px 0;
